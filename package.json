@@ -1,0 +1,27 @@
+{
+  "name": "nodedesarrolloplataformas",
+  "version": "1.0.0",
+  "description": "carpeta para la materia desarrollo en plataformas",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pefectw/nodedesarrolloplataformas.git"
+  },
+  "keywords": [
+    "node",
+    "url",
+    "dessarroloplataformas"
+  ],
+  "author": "cristian diaz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Pefectw/nodedesarrolloplataformas/issues"
+  },
+  "homepage": "https://github.com/Pefectw/nodedesarrolloplataformas#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
