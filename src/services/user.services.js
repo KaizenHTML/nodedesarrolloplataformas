@@ -1,42 +1,45 @@
 const db = require('../config/db.config');
 const bcrypt = require('bcryptjs'); // Importamos la librería para encriptar contraseñas
 
-// Función para obtener todos los usuarios
+// Obteniendo usuarios
 exports.findAll = async () => {
-    // La capa de servicios se comunica con la base de datos
+
+    // Comunicando con la base de datos
     const [rows] = await db.query('SELECT * FROM users');
     return rows;
 };
 
-// Función para obtener un usuario por su ID
+
+// Obteniendo usuarios por su ID
 exports.findById = async (id) => {
-    // La capa de servicios se comunica con la base de datos
+
     const [rows] = await db.query('SELECT * FROM users WHERE id = ?', [id]);
     return rows[0];
 };
 
-// Función para crear un nuevo usuario
+
+// Creando usuarios
 exports.create = async (newUser) => {
-    // Extraemos los datos del objeto de usuario
+    // Tomando los datos de la instancia
     const { nombre, email, password, acepto_terminos } = newUser;
 
-    // OPTIMIZACIÓN DE SEGURIDAD: Encriptar la contraseña
+    // Encriptando la contraseña
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // Insertamos los datos en la base de datos, usando la contraseña encriptada
+    // Insertando los datos en la DB
     const [result] = await db.query(
         'INSERT INTO users (nombre, email, password, acepto_terminos) VALUES (?, ?, ?, ?)',
         [nombre, email, hashedPassword, acepto_terminos]
     );
 
-    // Devolvemos el objeto del nuevo usuario con el ID asignado por la base de datos
+    // Devolviendo la instancia con un ID
     return { id: result.insertId, ...newUser };
 };
 
-// Función para actualizar un usuario
+// Actualizando usuarios
 exports.update = async (id, updatedUser) => {
-    // Lógica para actualizar los datos en la base de datos
+    // Actualizando los datos
     const { nombre, email, password, acepto_terminos } = updatedUser;
 
     const [result] = await db.query(
@@ -44,15 +47,15 @@ exports.update = async (id, updatedUser) => {
         [nombre, email, password, acepto_terminos, id]
     );
 
-    // Devolvemos true si se actualizó una fila
+    // Devolviendo si se actualizo una fila
     return result.affectedRows > 0;
 };
 
-// Función para eliminar un usuario
+// Eliminando usuario
 exports.remove = async (id) => {
-    // Lógica para eliminar un registro de la base de datos
+    // Eliminando un usuario
     const [result] = await db.query('DELETE FROM users WHERE id = ?', [id]);
     
-    // Devolvemos true si se eliminó una fila
+    // Devolviendo si se elimino una fila
     return result.affectedRows > 0;
 };

@@ -1,6 +1,6 @@
 const mysql = require('mysql2/promise');
 
-//  Cargando las variables de entorno
+// Cargando las variables de entorno
 require('dotenv').config();
 
 

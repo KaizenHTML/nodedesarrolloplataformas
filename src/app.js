@@ -1,16 +1,25 @@
-const express = require('express');
-const userRoutes = require('./routes/user.routes');
 require('dotenv').config();
+const express = require('express');
+const authRoutes = require('./routes/auth.routes'); 
+const userRoutes = require('./routes/user.routes');
+const productRoutes = require('./routes/product.routes');
+const inventoryRoutes = require('./routes/inventory.routes');
 
+
+// Inicializando 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Parseando
 app.use(express.json());
 
-// Prefijo de la API y montaje de las rutas
+// Enrutando a user.routes
 app.use('/api/users', userRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api/inventory', inventoryRoutes);
 
-// Inicia el servidor
+// Inicializando
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
