@@ -1,11 +1,8 @@
+// Importando biblioteca 
 const mysql = require('mysql2/promise');
-
-// Cargando las variables de entorno
 require('dotenv').config();
 
-
-// Creando un grupo de conexiones 
-const connection = mysql.createPool({
+const pool = mysql.createPool({
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
     user: process.env.DB_USER,
@@ -16,10 +13,18 @@ const connection = mysql.createPool({
     queueLimit: 0,
 });
 
-// Controlando errores
-connection.on('error', err => {
-    console.error('Error de conexión a la base de datos:', err);
-});
 
-//Exportando la instancia  
-module.exports = connection;
+const testConnection = async () => {
+    try {
+        const connection = await pool.getConnection();
+        console.log('Conexión a la base de datos establecida correctamente.');
+        connection.release(); // Libera la conexión
+    } catch (err) {
+        console.error('No se pudo conectar a la base de datos:', err.message);
+        process.exit(1); // Sale de la aplicación si no se puede conectar
+    }
+};
+
+testConnection();
+
+module.exports = pool;
