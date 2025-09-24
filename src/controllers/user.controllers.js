@@ -1,5 +1,4 @@
 const userService = require('../services/user.services');
-
 const errorHandler = require('../middleware/errorHandler');
 
 // Obtiene todos los usuarios
